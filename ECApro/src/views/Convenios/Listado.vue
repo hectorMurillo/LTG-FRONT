@@ -32,7 +32,7 @@
 								</tr>
 								<tr>
 									<td>Nombre</td>
-									<td><b>{{ rowSelected.NombreCandidato }}</b></td>
+									<td><b>{{ rowSelected.nombreContrante }}</b></td>
 								</tr>
 								<tr>
 									<td>Correo</td>
@@ -130,12 +130,13 @@
 							<base-table class="table align-items-center table-flush" tbody-classes="list" :data="clientes">
 								<template slot="columns">
 									<th scope="col"></th>
+									<th scope="col">Folio</th>
 									<th scope="col">Nombre</th>
 									<th scope="col">Correo</th>
-									<th scope="col">Telefono</th>
-									<th scope="col">Proyecto</th>
-									<th scope="col">Redes</th>
-									<th scope="col">Revisado / Confirmado</th>
+									<th scope="col">Medida de seg.</th>
+									<th scope="col">Opciones</th>
+									<!-- <th scope="col">Redes</th>
+									<th scope="col">Revisado / Confirmado</th> -->
 								</template>
 								<template slot-scope="{ row }">
 									<!-- <pre>{{row}}</pre> -->
@@ -143,39 +144,39 @@
 										<!-- <button class="btn btn-outline-primary btn-sm">
 															<i class="fas fa-eye"></i>
 														</button> -->
-										<button class="btn btn-outline-info btn-sm" @click="toggleModal(row)">
+										<!-- <button class="btn btn-outline-info btn-sm" @click="toggleModal(row)">
 											<i class="fas fa-clipboard-check"></i>
-										</button>
+										</button> -->
+										<!-- {{ row.folio }} -->
+									</td>
+									<td class="budget">
+										{{ row.folio }}
 									</td>
 									<th scope="row">
 										<div class="media align-items-center">
 											<div class="media-body">
 												<span class="name mb-0 text-sm">
-													{{ row.NombreCandidato }}
+													{{ row.nombreContrante }}
 												</span>
 											</div>
 										</div>
 									</th>
 									<td class="budget">
-										{{ row.CorreoElectronico }}
+										{{ row.correoElectronicoContratante }}
 									</td>
 
 									<td class="budget">
-										<a :href="'https://wa.me/+52' + row.Celular" target="_blank"><i class="fab fa-whatsapp"></i> {{
-											row.Celular }}</a>
+										<!-- <a :href="'https://wa.me/+52' + row.Celular" target="_blank"><i class="fab fa-whatsapp"></i> {{
+											row.Celular }}</a> -->
+											{{ row.medidaSeguridad }}
+
 									</td>
 									<td class="budget">
-										<span class="badge rounded-pill bg-primary text-white" v-if="row.IdCategoria == 1">{{
-											row.NombreCategoria + " - " + row.NombreSubCategoria
-										}}</span>
-										<span class="badge rounded-pill bg-primary text-white" v-if="row.IdCategoria == 2">{{
-											row.NombreCategoria + " - " + row.NombreSubCategoria
-										}}</span>
-										<span class="badge rounded-pill bg-primary text-white" v-if="row.IdCategoria == 3">{{
-											row.NombreCategoria + " - " + row.NombreSubCategoria
-										}}</span>
+										<button class="btn btn-outline-info btn-sm" @click="toggleModal(row)">
+											<i class="fas fa-print"></i>
+										</button>
 									</td>
-									<td class="budget">
+									<!-- <td class="budget">
 										<a :href="'https://www.facebook.com/' + row.Facebook + '/?app=fbl'
 											" target="_blank"><i class="fab fa-facebook"></i></a>
 										&nbsp;|&nbsp;
@@ -190,7 +191,7 @@
 											v-if="row.Revisado && !row.Confirmado">Pendiente de confirmar</span>
 										<span class="badge rounded-pill bg-success text-white"
 											v-if="row.Revisado && row.Confirmado">Confirmado</span>
-									</td>
+									</td> -->
 									<td class="text-left">
 										<!-- <b-dropdown
 																size="sm"
@@ -253,12 +254,12 @@ export default {
 		},
 		crearCliente() {
 			this.$router.push({
-				name: "agregar-candidatos",
+				name: "agregar-convenios",
 			});
 		},
 		editar(id) {
 			this.$router.push({
-				name: "agregar-candidatos",
+				name: "agregar-convenios",
 				params: { id: id },
 			});
 		},

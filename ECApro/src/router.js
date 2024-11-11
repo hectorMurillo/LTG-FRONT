@@ -24,10 +24,10 @@ const routes = [
           import(/* webpackChunkName: "demo" */ "./views/Dashboard.vue")
       },
       {
-        path: "/candidatos",
-        name: "candidatos",
+        path: "/convenios",
+        name: "convenios",
         component: () =>
-          import(/* webpackChunkName: "demo" */ "./views/Clientes/Listado.vue")
+          import(/* webpackChunkName: "demo" */ "./views/Convenios/Listado.vue")
       },
       {
         path: "/usuarios",
@@ -119,10 +119,10 @@ const routes = [
           import(/* webpackChunkName: "demo" */ "./views/Perfiles/Listado.vue")
       },
       {
-        path: "/agregarCandidatos",
-        name: "agregar-candidatos",
+        path: "/agregarConvenios",
+        name: "agregar-convenios",
         component: () =>
-          import(/* webpackChunkName: "demo" */ "./views/Clientes/Editar.vue"),
+          import(/* webpackChunkName: "demo" */ "./views/Convenios/Editar.vue"),
         props: true
       },
       {

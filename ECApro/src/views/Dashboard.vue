@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-header type="gradient-green" class="pb-6 pb-8 pt-5 pt-md-8">
+    <base-header type="gradiente" class="pb-6 pb-8 pt-5 pt-md-8">
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-3 col-lg-6">
@@ -22,7 +22,7 @@
         <div class="col-xl-3 col-lg-6">
           <stats-card
             title="Nuevos Clientes"
-            type="gradient-purple"
+            type="gradiente"
             sub-title="2,356"
             icon="ni ni-single-02"
             class="mb-4 mb-xl-0"
