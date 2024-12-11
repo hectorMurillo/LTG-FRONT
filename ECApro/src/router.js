@@ -30,6 +30,19 @@ const routes = [
           import(/* webpackChunkName: "demo" */ "./views/Convenios/Listado.vue")
       },
       {
+        path: "/recepcion",
+        name: "recepcion",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Recepcion/Listado.vue")
+      },
+      {
+        path: "/agregarRecepcion",
+        name: "agregar-recepcion",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Recepcion/Editar.vue"),
+        props: true
+      },
+      {
         path: "/usuarios",
         name: "usuarios",
         component: () =>

@@ -295,7 +295,7 @@
 
 <script>
 import storageSession from "../../services/storage.js";
-import Estados from "../../components/Utils/estados";
+// import Estados from "../../components/Utils/estados";
 import { listarSucursales } from "../../services/sucursales";
 import { getById, updateCliente } from "../../services/clientes";
 import { create } from "../../services/clientes";
@@ -317,10 +317,11 @@ export default {
                 }
             },
             sesion,
-            estados: Estados,
+            Estados:[],
+            estados: [],
             sucursales: "",
             pagina: 1,
-            totalPaginas: 1
+            totalPaginas: 1,
         };
     },
     created() {
