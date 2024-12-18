@@ -100,7 +100,7 @@
 			</div>
 			<div v-if="active" class="modal-backdrop fade show"></div>
 		</div>
-		<base-header type="gradient-green" class="pb-6 pb-8 pt-5 pt-md-8">
+		<base-header type="gradient-info" class="pb-6 pb-8 pt-5 pt-md-8">
 			<!-- if want cards like dashboard -->
 			<div class="row"></div>
 		</base-header>

@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark bg-dark"
+    class="navbar navbar-vertical fixed-left navbar-expand-md navbar-info bg-info"
     id="sidenav-main"
   >
     <div class="container-fluid">
@@ -12,9 +12,9 @@
         <img src="../../assets/logo.png" class="navbar-brand-img" alt="..." />
       </router-link>
 
-      <slot name="mobile-right">
+      <slot name="mobile-left">
         <ul class="nav align-items-center d-md-none">
-          <base-dropdown class="nav-item" position="right">
+          <base-dropdown class="nav-item" position="left">
             <a
               slot="title"
               class="nav-link nav-link-icon"
@@ -22,7 +22,6 @@
               role="button"
               data-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="false"
             >
               <i class="ni ni-bell-55"></i>
             </a>
@@ -183,6 +182,6 @@ export default {
   text-decoration-color: black;
 }
 a {
-  background: rgb(33, 37, 41);
+  /* background: rgb(33, 37, 41); */
 }
 </style>

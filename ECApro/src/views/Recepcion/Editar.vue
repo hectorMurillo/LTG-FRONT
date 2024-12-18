@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-header type="gradient-red" class="pb-6 pb-8 pt-5 pt-md-8">
+        <base-header type="gradient-info" class="pb-6 pb-8 pt-5 pt-md-8">
             <!-- Card stats -->
             <div class="row"></div>
         </base-header>
@@ -28,7 +28,7 @@
                                 <card type="secondary">
                                     <template>
                                         <form @submit.prevent>
-                                            <div style="border-style: solid;" class="col-12 col-md-12">
+                                            <div style="" class="col-12 col-md-12">
                                                 <h6 class="heading-small text-muted mb-2">
                                                     Datos de la recepcion
                                                 </h6>

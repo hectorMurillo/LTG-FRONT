@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-lg-5 col-md-7">
-      <div class="card bg-dark shadow border-0">
+      <div class="card bg-info shadow border-0">
         <div class="card-header bg-transparent pb-5">
           <div class="btn-wrapper text-center">
             <router-link slot="brand" class="navbar-brand" to="/">
@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="card-body px-lg-5 py-lg-5">
-          <div class="text-muted mb-2">
+          <div class="mb-2">
             <small>Ingresa tus datos para iniciar sesion</small>
           </div>
           <form role="form" @submit.prevent="logeo">
@@ -32,7 +32,7 @@
             </base-input>
 
             <div class="text-center">
-              <base-button type="outline-success" :nativeType="'submit'" class="my-4"
+              <base-button style="background-color: rgb(191, 18, 29);" :nativeType="'submit'" class="my-4"
                 >Entrar</base-button
               >
             </div>
@@ -66,7 +66,7 @@ export default {
           login(this.model.user, this.model.password)
             .then(() => {
               alerta.toast(
-                "Bienvenid@ " + sessionStorage.getItem("nombre"),
+                "Bienvenido " + sessionStorage.getItem("nombre"),
                 "success"
               );
               this.$router.push("/dashboard");
