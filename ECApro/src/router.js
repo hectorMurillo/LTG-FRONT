@@ -77,8 +77,8 @@ const routes = [
           )
       },
       {
-        path: "/cotizador",
-        name: "Cotizador",
+        path: "/conteo",
+        name: "Conteo",
         component: () =>
           import(
             /* webpackChunkName: "demo" */ "./views/Cotizaciones/Cotizador.vue"
