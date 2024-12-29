@@ -43,6 +43,7 @@
                                                         <base-input alternative="" label="Fecha de recepción"
                                                             placeholder="Fecha de recepción"
                                                             input-classes="form-control-alternative"
+                                                            type="date"
                                                             v-model="recepcion.fechaRecepcion" />
                                                     </div>
                                                     <!-- <div class="col-sm-12 col-md-6">

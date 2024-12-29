@@ -24,22 +24,22 @@
                 </template>
 
                 <template slot-scope="{row}">
-                    <td>
+                    <td :class="row.PORELABORAR == 0 ? 'tachado' : '.sinStyle'">
                         {{ row.IDLOTE }}
                     </td>
-                    <th scope="row">
+                    <th scope="row" :class="row.PORELABORAR == 0 ? 'tachado' : '.sinStyle'">
                         {{ row.proveedor }}
                     </th>
-                    <td>
+                    <td :class="row.PORELABORAR == 0 ? 'tachado' : '.sinStyle'">
                         {{ row.FECHAINICIO }}
                     </td>
-                    <td>
+                    <td :class="row.PORELABORAR == 0 ? 'tachado' : '.sinStyle'">
                         {{ row.ELABORADOS }}
                     </td>
-                    <td>
+                    <td :style="row.PORELABORAR == 0 ? 'color:green' : 'color:black'">
                         {{ Math.round(row.porcentaje_elaborados) }}%
                     </td>
-                    <td>
+                    <td :class="row.PORELABORAR == 0 ? 'tachado' : '.sinStyle'">
                         <!-- <i class="text-success mr-3"
                             :class="row.bounceRateDirection === 'up' ? 'text-success fas fa-arrow-up' : 'text-danger fas fa-arrow-down'">
                         </i> -->
@@ -122,4 +122,11 @@ export default {
     // }
 }
 </script>
-<style></style>
+<style scoped>
+.tachado {
+  text-decoration: line-through;
+}
+.sinStyle {
+  text-decoration: none;
+}
+</style>

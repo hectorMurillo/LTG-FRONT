@@ -53,7 +53,7 @@
                                         <div class="col-sm-6 col-md-6">
                                             <label class="form-control-label" for="proveedor">Hasta</label>
                                             <base-input input-classes="form-control-alternative" type="date"
-                                                v-model="fechaHasta" @change="obtenerFechasEntre()">
+                                                v-model="fechaHasta" @change="obtenerFechasEntre()" disabled>
                                             </base-input>
                                         </div>
                                     </div>
@@ -64,12 +64,12 @@
                                                 v-model="nuevoCliente.apellidoS" required v-upper-case />
                                         </div>
                                     </div> -->
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-12 text-right">
                                             <base-button type="success" v-on:click="crearCliente">
                                                 Agregar</base-button>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="row">
@@ -93,7 +93,8 @@
                                                 <td v-for="fecha in fechasEntre" :key="fecha">
                                                     <div class="row">
                                                         <base-input class="" type="number" name=""
-                                                            :id="obtenerIdInput(row.id, fecha)"
+                                                            :id="obtenerIdInputEntrada(row.id, fecha)"
+                                                            v-model="idsInputs[row.id].cantidad"
                                                             :placeholder="row.nombre.split(' ')[0]" />
                                                         <base-button iconOnly outline class="block" type="success"
                                                             size="md" @click="guardarConteo(row.id, fecha)">
@@ -369,6 +370,10 @@ import {
     buscarClientesPorNombre,
     createProspecto,
 } from "../../services/clientes";
+import {
+    listarConteosXFechas,
+    agregarConteo
+} from "../../services/inventarios.js";
 import alerta from "../../services/Alertas";
 export default {
     components: { detalleCotizacion, totalCotizacion },
@@ -380,7 +385,8 @@ export default {
             fechaDesde: "",
             fechaHasta: "",
             fechasEntre: [],
-            conteosGrales: [{ colaborador: 1, conteos: [{ "2024-12-23": 200 }] }],
+            // conteosGrales: [{ colaborador: 1, conteos: [{ "2024-12-23": 200 }] }],
+            conteosGrales: [],
             model: {
                 busqueda: "",
             },
@@ -432,7 +438,8 @@ export default {
                 cantidad: "",
                 precio: "",
             },
-            colaboradores: Colaborador
+            colaboradores: Colaborador,
+            idsInputs: [{identificador:null,cantidad:0}]
         };
     },
     methods: {
@@ -441,20 +448,19 @@ export default {
             this.modals.modalP = false;
         },
         obtenerIdInput(id, fecha) {
-            return `${id}_${fecha}`;
+            let identificadorCompuesto = `${id}_${fecha}`;
+            return identificadorCompuesto;
         },
         guardarConteo(id, fecha) {
-            console.log(fecha,this.conteosGrales.find(registro=>{
-                return registro.colaborador == id && registro.conteos.some(conteo => Object.keys(conteo)[0] == fecha) 
-            }))
-
-            // return datos.find(registro => {
-            //     return registro.colaborador === colaborador &&
-            //         registro.conteos.some(conteo => Object.keys(conteo)[0] === fecha && Object.values(conteo)[0] === valorABuscar);
-            // });
-
-
-            // conteosGrales:[{colaborador:1,conteos:[{"2024-12-22":200}]}]
+            let element = document.getElementById(`${id}_${fecha}`)
+            let conteo = {
+                "identificadorDiario": this.obtenerIdInput(id, fecha),
+                "idUsuarioRegistra": 1,
+                "cantidad": element.value
+            };
+            agregarConteo(conteo).then(() => {
+                alerta.toast("Agregado Correctamente", "success");
+            });
         },
         agregarPorCodigo(codigo) {
             buscarPorCodigo(codigo).then((res) => {
@@ -592,7 +598,6 @@ export default {
         buscarCliente() {
             buscarClientesPorNombre(this.buscando.nombre).then((res) => {
                 this.resBusqueda = res.clientes;
-                console.log(res);
             });
         },
         buscarProducto() {
@@ -635,13 +640,40 @@ export default {
             fechas = fechas.length <= 7 ? fechas : [];
             fechas.length == 0 ? Alertas.toast("No puede ser más de 7 días de diferencia", "error") : "";
             return fechas;
-        }
+        },
+        obtenerConteosFechas() {
+            listarConteosXFechas(this.fechaDesde, this.fechaHasta).then((res) => {
+                console.log(res);
+                res.forEach(x => {
+                    this.idsInputs.find(idInp => x.identificadorDiario == idInp.identificador ).cantidad = x.cantidad
+                })
+            })
+        },
     },
-    mounted() {
+    created() {
         this.fechaDesde = this.obtenerFechaDesdeHoy();
-        this.fechaHasta = this.obtenerFechaDesdeHoy(2);
+        this.fechaHasta = this.obtenerFechaDesdeHoy();
         this.fechasEntre = this.obtenerFechasEntre();
     },
+    mounted() {
+        this.obtenerConteosFechas();
+    },
+    computed: {
+        obtenerIdInputEntrada() {
+            return (rowId, fecha) => {
+                if (!this.idsInputs.some(elemento => elemento.identificador == `${rowId}_${fecha}`)) {
+                    this.idsInputs.push({ "identificador": `${rowId}_${fecha}`, "cantidad": 0 });
+                }
+                // console.log(this.idsInputs)
+                return `${rowId}_${fecha}`;
+            };
+        },
+        obtenerValor(){
+            return (rowId,fecha)=>{
+                return this.idsInputs.find(`${rowId}_${fecha}`).cantidad;
+            }
+        }
+    }
 };
 </script>
 
