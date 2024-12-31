@@ -6,91 +6,21 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title">Información del candidato <span style="color:red;text-transform: uppercase;">{{
+							<h5 class="modal-title">Información de recepcion <span style="color:red;text-transform: uppercase;">{{
 								rowSelected.NombreCandidato }}</span></h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="toggleModal">
 								<span aria-hidden="true">[X]</span>
 							</button>
 						</div>
 						<div class="modal-body">
-							<table class="table ">
-								<!-- <th> -->
-								<!-- <pre>{{rowSelected}}</pre> -->
-								<tr>
-									<td>Imagen de flyer</td>
-										<button class="btn btn-outline-default" v-if="imgSelected == ''" @click="verImagen(rowSelected.pathImgFlyer)">
-											<span>Ver Imagen
-												<i class="fas fa-image"></i>
-											</span>
-										</button>
-										<!-- <br> -->
-										<img :src="imgSelected" alt="" width="100"/>
-								</tr>
-								<tr>
-									<td>Código</td>
-									<td><b>{{ rowSelected.IdCandidatosAColaboradoresEnc }}</b></td>
-								</tr>
-								<tr>
-									<td>Nombre</td>
-									<td><b>{{ rowSelected.nombreContrante }}</b></td>
-								</tr>
-								<tr>
-									<td>Correo</td>
-									<td><b>{{ rowSelected.CorreoElectronico }}</b></td>
-								</tr>
-								<tr>
-									<td>Celular</td>
-									<td><b>{{ rowSelected.Celular }}</b></td>
-								</tr>
-								<tr>
-									<td>Instagram</td>
-									<td><b>{{ rowSelected.Instagram }}</b></td>
-								</tr>
-								<tr>
-									<td>Facebook</td>
-									<td><b>{{ rowSelected.Facebook }}</b></td>
-								</tr>
-								<tr>
-									<td>Proyecto</td>
-									<td><b>{{ rowSelected.NombreProyecto }}</b></td>
-								</tr>
-								<tr>
-									<td>Descripción</td>
-									<td>
-										<textarea name="" id="" cols="20" rows="10" v-model="rowSelected.DescripcionProducto"
-											disabled="true">
-											</textarea>
-									</td>
-								</tr>
-								<tr>
-									<td>Fecha de registro</td>
-									<td><b>{{ rowSelected.FechaRegistro }}</b></td>
-								</tr>
-								<tr>
-									<td>Categoría</td>
-									<td><b>{{ rowSelected.NombreCategoria }}</b></td>
-								</tr>
-								<tr>
-									<td>Subcategoría</td>
-									<td><b>{{ rowSelected.NombreSubCategoria }}</b></td>
-								</tr>
-								<tr>
-									<td>Revisado</td>
-									<td><b>{{ rowSelected.Revisado ? 'Si' : 'No' }}</b></td>
-								</tr>
-								<tr>
-									<td>Confirmado</td>
-									<td><b>{{ rowSelected.Confirmado ? 'Si' : 'No' }}</b></td>
-								</tr>
-								<!-- </th> -->
-							</table>
+							<pdf :src="base64PDF" />
 						</div>
 						<div class="modal-footer">
-							<button type="button" :class="classBtnRevisado()" @click="saveChangesRevisado(rowSelected)"
+							<!-- <button type="button" :class="classBtnRevisado()" @click="saveChangesRevisado(rowSelected)"
 								:disabled="rowSelected.Revisado">
 								<span v-if="!rowSelected.Revisado">Cambiar a revisado</span>
 								<span v-if="rowSelected.Revisado">Revisado <i class="far fa-check-square"></i></span>
-							</button>
+							</button> -->
 							<button type="button" class="btn btn-sm btn-outline-primary" @click="toggleModal">
 								Cerrar
 							</button>
@@ -171,10 +101,11 @@
 
 									</td>
 									<td class="budget">
-										<button class="btn btn-outline-info btn-sm" @click="toggleModal(row)">
+										<button class="btn btn-outline-info btn-sm" @click="mandarAImprimir(row.idRecepcion)">
 											<i class="fas fa-print"></i>
 										</button>
 									</td>
+									<pdf v-if="false" :src="base64PDF"></pdf>
 									<!-- <td class="budget">
 										<a :href="'https://www.facebook.com/' + row.Facebook + '/?app=fbl'
 											" target="_blank"><i class="fab fa-facebook"></i></a>
@@ -228,11 +159,14 @@
 <script>
 // import Swal from 'sweetalert2';
 // import { listar, actualizarRevisado, obtenerURLImg } from "../../services/candidatos";
-import { listar } from '../../services/recepciones'
+import { listar,generaPDF } from '../../services/recepciones';
+import pdf from 'vue-pdf';
 // import { buscarByNombre } from "../../services/clientes";
 export default {
 	name: "clientes",
-
+	components:{
+		pdf
+	},
 	data() {
 		return {
 			buscando: "",
@@ -242,7 +176,8 @@ export default {
 			active: false,
 			show: false,
 			rowSelected: {},
-			imgSelected: ""
+			imgSelected: "",
+			base64PDF:""
 		};
 	},
 	// components:{
@@ -252,6 +187,13 @@ export default {
 		verImagen(nombreImagen) {
 			// this.imgSelected = this.imgSelected == "" ? obtenerURLImg(nombreImagen) : "";
 			nombreImagen+"";
+		},
+		mandarAImprimir(id){
+			generaPDF(id).then((res)=>{
+				this.base64PDF = `data:application/pdf;base64,${res}`;
+				// window.open(this.base64PDF);
+			});
+			this.toggleModal()
 		},
 		crearCliente() {
 			this.$router.push({
@@ -292,8 +234,8 @@ export default {
 				this.clientes = resultado;
 			}
 		},
-		toggleModal(rowSelected) {
-			this.rowSelected = rowSelected
+		toggleModal() {
+			// this.rowSelected = rowSelected
 			const body = document.querySelector("body");
 			this.active = !this.active;
 			this.imgSelected = "";
