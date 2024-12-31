@@ -24,10 +24,29 @@ const routes = [
           import(/* webpackChunkName: "demo" */ "./views/Dashboard.vue")
       },
       {
-        path: "/candidatos",
-        name: "candidatos",
+        path: "/convenios",
+        name: "convenios",
         component: () =>
-          import(/* webpackChunkName: "demo" */ "./views/Clientes/Listado.vue")
+          import(/* webpackChunkName: "demo" */ "./views/Convenios/Listado.vue")
+      },
+      {
+        path: "/recepcion",
+        name: "recepcion",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Recepcion/Listado.vue")
+      },
+      {
+        path: "/agregarRecepcion",
+        name: "agregar-recepcion",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Recepcion/Editar.vue"),
+        props: true
+      },
+      {
+        path: "/pagos",
+        name: "pagos",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Pagos//Listado.vue")
       },
       {
         path: "/usuarios",
@@ -58,8 +77,8 @@ const routes = [
           )
       },
       {
-        path: "/cotizador",
-        name: "Cotizador",
+        path: "/conteo",
+        name: "Conteo",
         component: () =>
           import(
             /* webpackChunkName: "demo" */ "./views/Cotizaciones/Cotizador.vue"
@@ -119,10 +138,10 @@ const routes = [
           import(/* webpackChunkName: "demo" */ "./views/Perfiles/Listado.vue")
       },
       {
-        path: "/agregarCandidatos",
-        name: "agregar-candidatos",
+        path: "/agregarConvenios",
+        name: "agregar-convenios",
         component: () =>
-          import(/* webpackChunkName: "demo" */ "./views/Clientes/Editar.vue"),
+          import(/* webpackChunkName: "demo" */ "./views/Convenios/Editar.vue"),
         props: true
       },
       {
