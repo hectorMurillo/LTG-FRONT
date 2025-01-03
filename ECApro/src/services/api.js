@@ -6,7 +6,9 @@ import storage from './storage';
 
 // const url = 'https://srv584966.hstgr.cloud/api/'
 
-const url = 'http://localhost:80/'
+// const url = 'https://srv639121.hstgr.cloud/'
+const url = 'http://localhost:3000/'
+
 const config = {
   //baseURL: 'http://ec2-18-222-139-92.us-east-2.compute.amazonaws.com/API',
   baseURL: url,

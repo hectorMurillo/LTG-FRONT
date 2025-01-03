@@ -1,8 +1,11 @@
 <template>
     <div>
-        <base-header type="info" class="pb-6 pb-8 pt-5 pt-md-8">
+        <base-header type="gradient-green" class="pb-6 pb-8 pt-5 pt-md-8">
             <!-- if want cards like dashboard -->
             <div class="row ml-1">
+                <base-button class="mb-1" v-on:click="selectInventario('0')" type="white">
+                    Todos
+                </base-button>
                 <base-button class="mb-1" v-for="inventario in inventarios" :key="inventario.uid"
                     v-on:click="selectInventario(inventario.uid)" type="white">
                     {{ inventario.nombre }}
@@ -25,23 +28,13 @@
                                     <base-input placeholder="Busqueda" addon-right-icon="fa fa-search" v-upper-case
                                         v-model="model.busqueda" v-on:keyup="buscarProducto" />
                                 </div>
-                                <!-- <div class="col-12 col-md-3">
+                                <div class="col-12 col-md-3">
                                     <div class="mt-3"></div>
                                     <base-button v-on:click="addArticulo()" type="success">Agregar</base-button>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
-                        <div class="row mt-5">
-                            <div class="col-12 mb-5">
-                                <cajas-x-elaborar></cajas-x-elaborar>
-                            </div>
-                        </div>
-                        <!-- <div class="row mt-5">
-                            <div class="col-xl-4">
-                                <social-traffic-table></social-traffic-table>
-                            </div>
-                        </div> -->
-                        <!-- <div class="table-responsive table-striped table-hover">
+                        <div class="table-responsive table-striped table-hover">
                             <base-table class="table align-items-center table-flush" tbody-classes="list"
                                 :data="articulos">
                                 <template slot="columns">
@@ -55,7 +48,7 @@
                                     <th scope="col">Status</th>
                                     <th scope="col"></th>
                                 </template>
-<template slot-scope="{ row }">
+                                <template slot-scope="{ row }">
                                     <th scope="row">
                                         <div class="media align-items-center">
                                             <div class="media-body">
@@ -96,8 +89,8 @@
                                         </b-dropdown>
                                     </td>
                                 </template>
-</base-table>
-</div> -->
+                            </base-table>
+                        </div>
                         <div class="card-footer d-flex justify-content-end">
                             <!-- <base-pagination
                 :page-count="totalPaginas"
@@ -262,11 +255,9 @@ import alerta from "../../services/Alertas";
 
 import { listadoEtiquetas, agregar } from "../../services/etiquetas";
 
-// import SocialTrafficTable from '../Dashboard/SocialTrafficTable.vue';
-import CajasXElaborar from '../Dashboard/CajasXElaborar.vue';
-
 import {
-    listadoUltimosLotesRecibidos
+    createInventario,
+    listadoInventarios,
 } from "../../services/inventarios";
 
 import {
@@ -278,10 +269,7 @@ import {
 } from "../../services/productos";
 
 export default {
-    components: {
-        CajasXElaborar,
-        // SocialTrafficTable
-    },
+    components: {},
     name: "Inventario",
     data() {
         let sesion = storageSession.getObject("sesion");
@@ -311,7 +299,7 @@ export default {
                 descripcion: "",
                 usuario: "",
             },
-            ultimosLotes: [],
+            inventarios: [],
             etiquetas: [],
             idInventario: "",
             model: {
@@ -342,8 +330,8 @@ export default {
             })
         },
         getInventarios() {
-            listadoUltimosLotesRecibidos().then((res) => {
-                this.ultimosLotes = res;
+            listadoInventarios().then((res) => {
+                this.inventarios = res.inventarios;
             });
         },
         selectInventario(id) {
@@ -382,16 +370,16 @@ export default {
                 });
             }
         },
-        // agregarInventario() {
-        //     createInventario(this.nuevoInventario).then(() => {
-        //         this.modals.modal = false;
-        //         this.modal.alta = true;
-        //         this.getInventarios();
-        //         alerta.toast("Agregado Correctamente", "success");
-        //         this.nuevoInventario.nombre = "";
-        //         this.nuevoInventario.descripcion = "";
-        //     });
-        // },
+        agregarInventario() {
+            createInventario(this.nuevoInventario).then(() => {
+                this.modals.modal = false;
+                this.modal.alta = true;
+                this.getInventarios();
+                alerta.toast("Agregado Correctamente", "success");
+                this.nuevoInventario.nombre = "";
+                this.nuevoInventario.descripcion = "";
+            });
+        },
         agregarEtiqueta() {
             agregar(this.nuevaEtiqueta).then(() => {
                 this.modals.modalEtiqueta = false;

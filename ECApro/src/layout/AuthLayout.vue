@@ -1,11 +1,10 @@
 <template>
     <div class="main-content ">
         <!-- Navbar -->
-        <base-nav class="navbar-top navbar-horizontal navbar-dark"
+        <base-nav class=""
                   containerClasses="px-4 container"
                   expand>
             <router-link slot="brand" class="navbar-brand" to="/">
-                <img src="img/brand/todoChiloLogo.png"/>
             </router-link>
         </base-nav>
         <!-- Header -->
@@ -38,7 +37,7 @@
                 <div class="row align-items-center justify-content-xl-between">
                     <div class="col-xl-6">
                         <div class="copyright text-center text-xl-left font-weight-bold">
-                            Todo Chilo &copy; {{year}} 
+                            
                         </div>
                     </div>
                     <!-- <div class="col-xl-6">
