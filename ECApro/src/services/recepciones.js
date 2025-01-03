@@ -7,6 +7,11 @@ function listar() {
   return api.get(path, header).then(res => res.data);
 }
 
+function generaPDF(id) {
+  const path = `cotizacion/pdf/${id}`;
+  return api.get(path, header).then(res => res.data);
+}
+
 function create(recepcion	) {
   const path = `${URL}/agregar/null`;
   return api.post(path, recepcion	, header).then(res => {
@@ -45,7 +50,8 @@ function create(recepcion	) {
 
 export {
     create,
-    listar
+    listar,
+    generaPDF
   //   updateCliente,
   //   createProspecto,
 //   actualizarRevisado,
