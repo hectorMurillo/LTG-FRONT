@@ -407,12 +407,12 @@ export default {
         },
         crearCliente() {
             this.$router.push({
-                name: "agregar-recepcion",
+                name: "recepcion-madera",
             });
         },
         editar(id) {
             this.$router.push({
-                name: "agregar-recepcion",
+                name: "recepcion-madera",
                 params: { id: id },
             });
         },

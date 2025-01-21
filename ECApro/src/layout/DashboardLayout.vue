@@ -6,6 +6,7 @@
       title="Argon"
     >
       <template slot="links">
+        <span v-if="!isProduction"><h2 class="color:#2dce89;">Desarrollo</h2></span>
         <div v-for="opcion in opciones" :key="opcion.id">
           <!-- antes de la modificacion by hector -->
           <!-- <sidebar-item
@@ -127,7 +128,7 @@
 import DashboardNavbar from "./DashboardNavbar.vue";
 import storageSession from "../../src/services/storage";
 import { FadeTransition } from "vue2-transitions";
-import { getOpciones } from "../../src/services/menu";
+import { getOpciones, getIsProduction} from "../../src/services/menu";
 
 export default {
   components: {
@@ -142,7 +143,7 @@ export default {
       isAdmin: false,
       isInventarios: false,
       isServicioC: false,
-
+      isProduction: false,
       sidebarBackground: "orange" //vue|blue|orange|green|red|primary
     };
   },
@@ -162,6 +163,9 @@ export default {
         this.opciones = res;
         console.log("aquii ",this.opciones)
       });
+      getIsProduction().then(res=>{
+        this.isProduction =  res[0].estatus;
+      })
     },
     tipoUsuario() {
       if (this.sesion.tipo == 1) {

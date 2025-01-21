@@ -16,7 +16,7 @@
                                         <base-button iconOnly outline rounded type="success" size="sm"
                                             v-on:click="regresar" icon="ni ni-bold-left" v-b-popover.hover.top
                                             title="Regresar"></base-button>
-                                        Recepcion: <span class="name mb-0 text-sm"></span>
+                                        Salida: <span class="name mb-0 text-sm"></span>
                                     </h3>
                                 </div>
                             </div>
@@ -30,22 +30,29 @@
                                         <form @submit.prevent>
                                             <div style="" class="col-12 col-md-12">
                                                 <h6 class="heading-small text-muted mb-2">
-                                                    Datos de la recepcion
+                                                    Datos de la salida
                                                     <i class="fas fa-truck-loading"></i>
                                                 </h6>
                                                 <div class="row">
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <base-input alternative="" label="Folio / Carta"
-                                                            placeholder="Folio / Carta"
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <base-input alternative="" label="Centro"
+                                                            placeholder="Centro"
                                                             input-classes="form-control-alternative"
                                                             v-model="recepcion.folio_carta" />
                                                     </div>
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <base-input alternative="" label="Fecha de recepción"
-                                                            placeholder="Fecha de recepción"
-                                                            input-classes="form-control-alternative" type="date"
-                                                            v-model="recepcion.fechaRecepcion" />
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <base-input alternative="" label="Cant. de cajas"
+                                                            placeholder="Cant. de cajas"
+                                                            input-classes="form-control-alternative"
+                                                            v-model="recepcion.folio_carta" />
                                                     </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <base-input alternative="" label="Recibe"
+                                                            placeholder="Recibe"
+                                                            input-classes="form-control-alternative"
+                                                            v-model="recepcion.folio_carta" />
+                                                    </div>
+
                                                     <!-- <div class="col-sm-12 col-md-6">
 														<base-input alternative="" label="Apellido Paterno" placeholder="Apellido Paterno"
 															input-classes="form-control-alternative" v-model="cliente.apellidoP" v-upper-case />
@@ -71,83 +78,6 @@
                                                             }">
                                                         </b-form-datepicker>
                                                     </div> -->
-                                                </div>
-                                                <div class="row">
-                                                    <!-- <div class="col-sm-12 col-md-4">
-                                                        <base-input alternative=" " label="Codigo Postal"
-                                                            placeholder="Codigo Postal"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="cliente.codigoPostal" v-upper-case />
-                                                    </div> -->
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <label class="form-control-label"
-                                                            for="proveedor">Proveedor</label>
-                                                        <select name="proveedor" id="proveedor"
-                                                            class="form-control form-control-alternative"
-                                                            aria-describedby="addon-right addon-left"
-                                                            v-model="recepcion.idProveedor">
-                                                            <option value="SELECCIONA UNA OPCION" disabled selected>
-                                                                SELECCIONA UNA OPCIÓN
-                                                            </option>
-                                                            <option v-for="proveedor of proveedores" :key="proveedor.id"
-                                                                :value="proveedor.id">
-                                                                {{ proveedor.nombre }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <base-input alternative="" label="Subtotal"
-                                                            placeholder="Subtotal"
-                                                            input-classes="form-control-alternative" v-model="subtotal"
-                                                            disabled />
-                                                    </div>
-                                                </div>
-                                                <!-- <div class="row">
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input alternative="" label="RFC" placeholder="RFC"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="cliente.rfc" v-upper-case />
-                                                    </div>
-                                                </div> -->
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative="" label="Costo de madera"
-                                                            placeholder="Costo de madera"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.costoMadera" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative="" label="Costo de flete"
-                                                            placeholder="Costo de flete"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.costoFlete" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative="" label="Costo descarga"
-                                                            placeholder="Costo descarga"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.costoDescarga" />
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative=""
-                                                            label="Cantidad cabezales" placeholder="Cantidad cabezales"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.cantCabezales" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative=""
-                                                            label="Cantidad tabletas" placeholder="Cantidad tabletas"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.cantidadTabletas" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative="" label="No. Cajas"
-                                                            placeholder="No. Cajas"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.numCajas" />
-                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 text-right mt-3 mb-3" v-if="id == 0">
@@ -200,6 +130,9 @@ export default {
             sucursales: "",
             pagina: 1,
             totalPaginas: 1,
+            salida:{
+                idSalida: null,
+            },
             recepcion: {
                 idRecepcion: null,
                 fechaRecepcion: null,

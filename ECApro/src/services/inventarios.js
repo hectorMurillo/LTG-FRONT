@@ -13,7 +13,7 @@ function listarConteosXFechas(fechaInicio, fechaFin) {
 
 function agregarConteo(item) {
     const path = `${URL}/agregarConteo`;
-    return api.post(path,item, header).then(res=>res.data);
+    return api.post(path,item, header).then(res=>res);
 }
 
 // "identificadorDiario":this.obtenerIdInput(id,fecha),

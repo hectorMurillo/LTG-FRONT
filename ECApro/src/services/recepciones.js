@@ -3,20 +3,20 @@ const URL = `recepciones`;
 const header = { headers: headers };
 
 function listar() {
-  const path = `${URL}/listar`;
-  return api.get(path, header).then(res => res.data);
+    const path = `${URL}/listar`;
+    return api.get(path, header).then(res => res.data);
 }
 
 function generaPDF(id) {
-  const path = `cotizacion/pdf/${id}`;
-  return api.get(path, header).then(res => res.data);
+    const path = `cotizacion/pdf/${id}`;
+    return api.get(path, header).then(res => res.data);
 }
 
-function create(recepcion	) {
-  const path = `${URL}/agregar/null`;
-  return api.post(path, recepcion	, header).then(res => {
-    return res.data;
-  });
+function create(recepcion) {
+    const path = `${URL}/agregar/null`;
+    return api.post(path, recepcion, header).then(res => {
+        return res.data;
+    });
 }
 
 // function actualizarRevisado(idCandidato) {
@@ -52,12 +52,12 @@ export {
     create,
     listar,
     generaPDF
-  //   updateCliente,
-  //   createProspecto,
-//   actualizarRevisado,
-//   obtenerImagen,
-//   obtenerURLImg
-  //   getById,
-  //   buscarByNombre,
-  //   buscarClientesPorNombre
+    //   updateCliente,
+    //   createProspecto,
+    //   actualizarRevisado,
+    //   obtenerImagen,
+    //   obtenerURLImg
+    //   getById,
+    //   buscarByNombre,
+    //   buscarClientesPorNombre
 };

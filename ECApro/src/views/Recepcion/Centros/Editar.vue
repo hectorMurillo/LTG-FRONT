@@ -31,7 +31,6 @@
                                             <div style="" class="col-12 col-md-12">
                                                 <h6 class="heading-small text-muted mb-2">
                                                     Datos de la recepcion
-                                                    <i class="fas fa-truck-loading"></i>
                                                 </h6>
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6">
@@ -43,7 +42,8 @@
                                                     <div class="col-sm-12 col-md-6">
                                                         <base-input alternative="" label="Fecha de recepción"
                                                             placeholder="Fecha de recepción"
-                                                            input-classes="form-control-alternative" type="date"
+                                                            input-classes="form-control-alternative"
+                                                            type="date"
                                                             v-model="recepcion.fechaRecepcion" />
                                                     </div>
                                                     <!-- <div class="col-sm-12 col-md-6">
@@ -173,12 +173,12 @@
 </template>
 
 <script>
-import storageSession from "../../services/storage.js";
-import Proveedores from "../../components/Utils/proveedores.js";
-// import { listarSucursales } from "../../services/sucursales";
-import { getById, updateCliente } from "../../services/clientes.js";
-import { create } from "../../services/recepciones.js";
-import alerta from "../../services/Alertas.js";
+import storageSession from "../../../services/storage.js";
+import Proveedores from "../../../components/Utils/proveedores.js";
+// import { listarSucursales } from "../../../services/sucursales";
+import { getById, updateCliente } from "../../../services/clientes.js";
+import { create } from "../../../services/recepciones.js";
+import alerta from "../../../services/Alertas.js";
 export default {
     name: "Recepcion-madera",
     props: {
@@ -250,8 +250,7 @@ export default {
                 cantidadTabletas: this.recepcion.cantidadTabletas,
                 numCajas: this.recepcion.numCajas,
                 codUsuario: this.recepcion.codUsuario,
-                costoXCaja: this.recepcion.costoXCaja,
-                tipoLote: 4
+                costoXCaja: this.recepcion.costoXCaja
             };
             create(recepcionACrear).then(() => {
                 alerta.toast("Guardado", "success");

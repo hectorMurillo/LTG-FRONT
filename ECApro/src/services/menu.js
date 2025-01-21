@@ -4,10 +4,14 @@ const URL = `/menu`
 const header = { headers: headers };
 
 function getOpciones(id) {
-  // const path = `${URL}/permisos/${id}`;
-  const path = `${URL}/listar/${id}`;
-  // alert( JSON.stringify(header))
-  return api.get(path, header).then(res => res.data);
-} 
+    // const path = `${URL}/permisos/${id}`;
+    const path = `${URL}/listar/${id}`;
+    // alert( JSON.stringify(header))
+    return api.get(path, header).then(res => res.data);
+}
 
-export { getOpciones };
+function getIsProduction() {
+    const path = `${URL}/verificaProductivo`;
+    return api.get(path,header).then(res=> res.data);
+}
+export { getOpciones, getIsProduction };

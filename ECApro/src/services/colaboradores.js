@@ -3,9 +3,30 @@ const URL = `colaboradores`;
 const header = { headers: headers };
 
 function listarCombo() {
-  const path = `${URL}/listaCombo`;
-  return api.get(path, header).then(res => res.data);
+    const path = `${URL}/listaCombo`;
+    return api.get(path, header).then(res => res.data);
 }
+
+function listarComboCajerosExternos() {
+    const path = `${URL}/cajaExternos/listaCombo`;
+    return api.get(path, header).then(res => res.data);
+}
+
+function getCantidadxcolaborador(fechaDesde, fechaHasta, codColaborador) {
+    const path = `${URL}/cantidadxcolaborador/${fechaDesde}/${fechaHasta}/${codColaborador}`;
+    return api.get(path, header).then(res => res.data[0]);
+}
+
+function guardarRegistroNomina(datosNomina) {
+    const path = `${URL}/registraNomina`
+    return api.post(path, datosNomina, header).then(res => res);
+}
+
+function generaPDFNomina(fechaInicio, fechaFin, codColaborador) {
+    const path = `${URL}/historialConteo/pdf/${fechaInicio}/${fechaFin}/${codColaborador}`
+    return api.get(path,header).then(res => res.data);
+}
+
 
 // function actualizarRevisado(idCandidato) {
 //   const path = `${URL}/actualizarARevisado/${idCandidato}/1`;
@@ -37,14 +58,18 @@ function listarCombo() {
 // }
 
 export {
-  //   create,
-  //   updateCliente,
-  //   createProspecto,
-  listarCombo,
-//   actualizarRevisado,
-//   obtenerImagen,
-//   obtenerURLImg
-  //   getById,
-  //   buscarByNombre,
-  //   buscarClientesPorNombre
+    //   create,
+    //   updateCliente,
+    //   createProspecto,
+    listarCombo,
+    listarComboCajerosExternos,
+    getCantidadxcolaborador,
+    guardarRegistroNomina,
+    generaPDFNomina
+    //   actualizarRevisado,
+    //   obtenerImagen,
+    //   obtenerURLImg
+    //   getById,
+    //   buscarByNombre,
+    //   buscarClientesPorNombre
 };

@@ -3,7 +3,7 @@
         <div class="card-header border-0">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="mb-0">Ultimos lotes recibidos</h3>
+                    <h3 class="mb-0">Lotes de materia prima                 recibidos</h3>
                 </div>
                 <div class="col text-right">
                     <h3>Por elaborar</h3> <p>{{ sumaTotalPorElaborar }}</p>
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="table-responsive">
+        <div class="table-responsive"> 
             <base-table thead-classes="thead-light" :data="ultimosLotes">
                 <template slot="columns">
                     <th># Lote</th>

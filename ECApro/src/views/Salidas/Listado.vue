@@ -6,7 +6,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title">Información de recepcion <span
+							<h5 class="modal-title">Información de salida <span
 									style="color:red;text-transform: uppercase;">{{
 										rowSelected.NombreCandidato }}</span></h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"
@@ -43,7 +43,7 @@
 						<div class="card-header border-0 mb-3">
 							<div class="row container">
 								<div class="col-12 col-md-5 text-left">
-									<h3 class="mb-0">Listado de Recepciones </h3>
+									<h3 class="mb-0">Listado de Salidas </h3>
 								</div>
 							</div>
 							<div class="row">
@@ -54,37 +54,25 @@
 								</div>
 								<div class="col-xl-2 col-md-2 col-sm-4 mt-4">
 									<!-- <div class="mt-3"></div> -->
-									<base-button v-on:click="agregarRecepcionMadera()" class="btn-outline-success btn-md">
+									<base-button v-on:click="agregarSalidaMP()" class="btn-outline-success btn-md">
 										<div class="row text-center ml-4">
 											<i class="fas fa-plus"></i>
 											<i class="fas fa-truck-loading"></i>
 										</div>
 										<div class="row">
-											Recepción de <br>M.P. 
+											Salida de M.P.<br> a centros 
 										</div>
 									</base-button>
 								</div>
 								<div class="col-xl-2 col-md-2 col-sm-4 mt-4">
 									<!-- <div class="mt-3"></div> -->
-									<base-button v-on:click="agregarRecepcionCajas()" class="btn-outline-success btn-md">
+									<base-button v-on:click="agregarSalidaCajas()" class="btn-outline-success btn-md">
 										<div class="row text-center ml-4">
 											<i class="fas fa-plus"></i>
 											<i class="fas fa-boxes"></i>
 										</div>
 										<div class="row">
-											Recepción de <br>Cajas
-										</div>
-									</base-button>
-								</div>
-								<div class="col-xl-2 col-md-2 col-sm-4 mt-4">
-									<!-- <div class="mt-3"></div> -->
-									<base-button v-on:click="agregarRecepcionCentros()" class="btn-outline-success btn-md">
-										<div class="row text-center ml-4">
-											<i class="fas fa-plus"></i>
-											<i class="fas fa-users"></i>
-										</div>
-										<div class="row">
-											Recepción de <br>centros
+											Salida de <br>Cajas
 										</div>
 									</base-button>
 								</div>
@@ -244,14 +232,14 @@ export default {
 			});
 			// this.toggleModal()
 		},
-		agregarRecepcionMadera() {
+		agregarSalidaCajas() {
 			this.$router.push({
-				name: "recepcion-madera",
+				name: "salida-cajas",
 			});
 		},
-		agregarRecepcionCajas(){
+		agregarSalidaMP(){
 			this.$router.push({
-				name: "recepcion-cajas",
+				name: "salida-mp",
 			});
 		},
 		agregarRecepcionCentros(){

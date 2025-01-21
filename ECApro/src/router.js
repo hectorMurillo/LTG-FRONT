@@ -36,10 +36,44 @@ const routes = [
           import(/* webpackChunkName: "demo" */ "./views/Recepcion/Listado.vue")
       },
       {
-        path: "/agregarRecepcion",
-        name: "agregar-recepcion",
+        path: "/recepcionMadera",
+        name: "recepcion-madera",
         component: () =>
           import(/* webpackChunkName: "demo" */ "./views/Recepcion/Editar.vue"),
+        props: true
+      },
+      {
+        path: "/recepcionCajas",
+        name: "recepcion-cajas",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Recepcion/Cajas/Editar.vue"),
+        props: true
+      },
+      {
+        path: "/recepcionCentros",
+        name: "recepcion-centros",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Recepcion/Centros/Editar.vue"),
+        props: true
+      },
+      {
+        path: "/salida",
+        name: "salida",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Salidas/Listado.vue"),
+      },
+      {
+        path: "/salida-cajas",
+        name: "salida-cajas",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Salidas/EditarCajas.vue"),
+        props: true
+      },
+      {
+        path: "/salida-mp",
+        name: "salida-mp",
+        component: () =>
+          import(/* webpackChunkName: "demo" */ "./views/Salidas/EditarMP.vue"),
         props: true
       },
       {
@@ -78,6 +112,14 @@ const routes = [
       },
       {
         path: "/conteo",
+        name: "Conteo",
+        component: () =>
+          import(
+            /* webpackChunkName: "demo" */ "./views/Cotizaciones/Cotizador.vue"
+          )
+      },
+      {
+        path: "/conteo/historial",
         name: "Conteo",
         component: () =>
           import(
