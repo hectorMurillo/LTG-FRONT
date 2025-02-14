@@ -38,46 +38,20 @@
                                                         <base-input alternative="" label="Cliente"
                                                             placeholder="Cliente"
                                                             input-classes="form-control-alternative"
-                                                            v-model="recepcion.folio_carta" />
+                                                            v-model="salida.cliente" />
                                                     </div>
                                                     <div class="col-sm-12 col-md-4">
                                                         <base-input alternative="" label="Cant. de cajas"
                                                             placeholder="Cant. de cajas"
                                                             input-classes="form-control-alternative"
-                                                            v-model="recepcion.folio_carta" />
+                                                            v-model="salida.cantCajas" />
                                                     </div>
                                                     <div class="col-sm-12 col-md-4">
                                                         <base-input alternative="" label="Precio por unidad"
                                                             placeholder="Precio por unidad"
                                                             input-classes="form-control-alternative"
-                                                            v-model="recepcion.folio_carta" />
+                                                            v-model="salida.precioxUnidad" />
                                                     </div>
-
-                                                    <!-- <div class="col-sm-12 col-md-6">
-														<base-input alternative="" label="Apellido Paterno" placeholder="Apellido Paterno"
-															input-classes="form-control-alternative" v-model="cliente.apellidoP" v-upper-case />
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-sm-12 col-md-6">
-														<base-input alternative="" label="Apellido Materno" placeholder="Apellido Materno"
-															input-classes="form-control-alternative" v-model="cliente.apellidoS" v-upper-case />
-													</div> -->
-                                                    <!-- <div class="col-sm-12 col-md-6">
-                                                        <label style="margin-bottom: 0" for="datepicker"
-                                                            class="form-control-label mb-2">Fecha de
-                                                            Nacimiento</label>
-                                                        <b-form-datepicker size="sm" id="datepicker"
-                                                            placeholder="Fecha de Nacimiento"
-                                                            label-help="Selecciona la fecha con el puntero."
-                                                            class="mb-2" v-model="cliente.fechaNacimiento"
-                                                            :date-format-options="{
-                                                                year: 'numeric',
-                                                                month: 'numeric',
-                                                                day: 'numeric'
-                                                            }">
-                                                        </b-form-datepicker>
-                                                    </div> -->
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 text-right mt-3 mb-3" v-if="id == 0">
@@ -107,7 +81,7 @@ import storageSession from "../../services/storage.js";
 import Proveedores from "../../components/Utils/proveedores.js";
 // import { listarSucursales } from "../../services/sucursales";
 import { getById, updateCliente } from "../../services/clientes.js";
-import { create } from "../../services/recepciones.js";
+import { agregarSalidaCajas } from "../../services/salidas.js";
 import alerta from "../../services/Alertas.js";
 export default {
     name: "Recepcion-madera",
@@ -132,22 +106,25 @@ export default {
             totalPaginas: 1,
             salida:{
                 idSalida: null,
+                cliente: "",
+                cantCajas:0,
+                precioxUnidad:0.00
             },
-            recepcion: {
-                idRecepcion: null,
-                fechaRecepcion: null,
-                folio_carta: "",
-                idProveedor: "SELECCIONA UNA OPCION",
-                subtotal: 0.00,
-                costoMadera: 0.00,
-                costoFlete: 0.00,
-                costoDescarga: 0,
-                cantCabezales: 0,
-                cantidadTabletas: 0,
-                numCajas: 0,
-                codUsuario: 0,
-                costoXCaja: 0
-            }
+            // recepcion: {
+            //     idRecepcion: null,
+            //     fechaRecepcion: null,
+            //     folio_carta: "",
+            //     idProveedor: "SELECCIONA UNA OPCION",
+            //     subtotal: 0.00,
+            //     costoMadera: 0.00,
+            //     costoFlete: 0.00,
+            //     costoDescarga: 0,
+            //     cantCabezales: 0,
+            //     cantidadTabletas: 0,
+            //     numCajas: 0,
+            //     codUsuario: 0,
+            //     costoXCaja: 0
+            // }
         };
     },
     computed: {
@@ -170,23 +147,13 @@ export default {
     },
     methods: {
         save() {
-            let recepcionACrear = {
-                idRecepcion: this.recepcion.idRecepcion,
-                fechaRecepcion: this.recepcion.fechaRecepcion,
-                folio_carta: this.recepcion.folio_carta,
-                idProveedor: this.recepcion.idProveedor,
-                subtotal: this.recepcion.subtotal,
-                costoMadera: this.recepcion.costoMadera,
-                costoFlete: this.recepcion.costoFlete,
-                costoDescarga: this.recepcion.costoDescarga,
-                cantCabezales: this.recepcion.cantCabezales,
-                cantidadTabletas: this.recepcion.cantidadTabletas,
-                numCajas: this.recepcion.numCajas,
-                codUsuario: this.recepcion.codUsuario,
-                costoXCaja: this.recepcion.costoXCaja,
-                tipoLote: 4
+            let salidaACrear = {
+                idSalida: this.salida.idSalida,
+                cantCajas: this.salida.cantCajas,
+                precioxUnidad: this.salida.precioxUnidad,
+                cliente: this.salida.cliente
             };
-            create(recepcionACrear).then(() => {
+            agregarSalidaCajas(salidaACrear).then(() => {
                 alerta.toast("Guardado", "success");
                 this.$router.push({
                     name: "recepcion"

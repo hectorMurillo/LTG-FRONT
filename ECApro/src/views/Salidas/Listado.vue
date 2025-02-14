@@ -84,57 +84,49 @@
 								<template slot="columns">
 									<th scope="col"></th>
 									<th scope="col">FolioRecepcion</th>
-									<th scope="col">Folio/Carta</th>
+									<th scope="col">Tipo Movimiento</th>
 									<th scope="col">Fecha</th>
-									<th scope="col">Nombre Lote</th>
-									<th scope="col">Proveedor</th>
+									<th scope="col">Cant. de cajas</th>
+									<th scope="col">Recibió</th>
 									<!-- <th scope="col">Redes</th>
 									<th scope="col">Revisado / Confirmado</th> -->
 								</template>
 								<template slot-scope="{ row }">
 									<!-- <pre>{{row}}</pre> -->
 									<td>
-										<!-- <button class="btn btn-outline-primary btn-sm">
-															<i class="fas fa-eye"></i>
-														</button> -->
-										<!-- <button class="btn btn-outline-info btn-sm" @click="toggleModal(row)">
-											<i class="fas fa-clipboard-check"></i>
-										</button> -->
-										<!-- {{ row.folio }} -->
 									</td>
 									<td class="budget">
-										{{ row.idRecepcion }}
+										{{ row.idSalida }}
 									</td>
 									<th scope="row">
 										<div class="media align-items-center">
 											<div class="media-body">
 												<span class="name mb-0 text-sm">
-													{{ row.folio_carta }}
+													{{ row.tipoMovimiento }}
 												</span>
 											</div>
 										</div>
 									</th>
 									<td class="budget">
-										{{ row.fechaFormat }}
+										{{ row.fechaMvto }}
 									</td>
 									<td class="budget">
-										{{ row.NOMBRELOTE }}
+										{{ row.cantCajas }}
 									</td>
 
 									<td class="budget">
 										<!-- <a :href="'https://wa.me/+52' + row.Celular" target="_blank"><i class="fab fa-whatsapp"></i> {{
 											row.Celular }}</a> -->
-										{{ row.aliasProveedor }}
+										{{ row.nombreRecibe }}
 
 									</td>
-									<td class="budget">
-										<button class="btn btn-outline-info btn-sm"
-											@click="mandarAImprimir(row.idRecepcion)">
+									<!-- <td class="budget">
+										<button class="btn btn-outline-info btn-sm">
 											<i class="fas fa-download"></i>
 										</button>
 										<a :href="base64PDF" :download="'rptRecepcion_'+row.folio_carta+'_'+randomId+'.pdf'" id="descargaRpt" style="display: none;"></a>
 									</td>
-									<pdf v-if="false" :src="base64PDF"></pdf>
+									<pdf v-if="false" :src="base64PDF"></pdf> -->
 									<!-- <td class="budget">
 										<a :href="'https://www.facebook.com/' + row.Facebook + '/?app=fbl'
 											" target="_blank"><i class="fab fa-facebook"></i></a>
@@ -188,7 +180,7 @@
 <script>
 // import Swal from 'sweetalert2';
 // import { listar, actualizarRevisado, obtenerURLImg } from "../../services/candidatos";
-import { listar, generaPDF } from '../../services/recepciones';
+import { listarSalidas } from '../../services/salidas';
 import pdf from 'vue-pdf';
 // import { buscarByNombre } from "../../services/clientes";
 export default {
@@ -218,20 +210,18 @@ export default {
 			// this.imgSelected = this.imgSelected == "" ? obtenerURLImg(nombreImagen) : "";
 			nombreImagen + "";
 		},
-		mandarAImprimir(id) {
-			this.randomId = (Math.round(Math.random()+1*100*Math.random()+1*623));
-			generaPDF(id).then((res) => {
-				const base64EncodePDF = res;
-				const pdfUrl =  `data:application/pdf;base64,${base64EncodePDF}`;
-				this.base64PDF = pdfUrl;
-				setTimeout(() => {
-					const enlace = document.getElementById('descargaRpt');
-					enlace.click();
-				}, 1000);
-				// window.open(this.base64PDF);
-			});
-			// this.toggleModal()
-		},
+		// mandarAImprimir(id) {
+		// 	this.randomId = (Math.round(Math.random()+1*100*Math.random()+1*623));
+		// 	generaPDF(id).then((res) => {
+		// 		const base64EncodePDF = res;
+		// 		const pdfUrl =  `data:application/pdf;base64,${base64EncodePDF}`;
+		// 		this.base64PDF = pdfUrl;
+		// 		setTimeout(() => {
+		// 			const enlace = document.getElementById('descargaRpt');
+		// 			enlace.click();
+		// 		}, 1000);
+		// 	});
+		// },
 		agregarSalidaCajas() {
 			this.$router.push({
 				name: "salida-cajas",
@@ -239,7 +229,7 @@ export default {
 		},
 		agregarSalidaMP(){
 			this.$router.push({
-				name: "salida-mp",
+				name: "salida-mp-a-centro",
 			});
 		},
 		agregarRecepcionCentros(){
@@ -254,7 +244,7 @@ export default {
 			});
 		},
 		listado() {
-			listar().then((res) => {
+			listarSalidas().then((res) => {
 				this.clientes = res?.data?.length == 0 ? [] : res;
 			});
 		},

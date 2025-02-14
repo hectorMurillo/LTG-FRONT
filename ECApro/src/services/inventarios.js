@@ -1,8 +1,14 @@
 import { api, headers } from './api';
 const URL = `inventarios`;
 const header = { headers: headers };
+
 function listadoUltimosLotesRecibidos() {
-    const path = `${URL}/listarUltimoLotesRecibidos`;
+    const path = `${URL}/listarUltimoLotesRecibidosMP`;
+    return api.get(path, header).then(res => res.data);
+}
+
+function listadoUltimosLotesCajasRecibidos() {
+    const path = `${URL}/listarUltimoLotesRecibidosCajas`;
     return api.get(path, header).then(res => res.data);
 }
 
@@ -16,6 +22,16 @@ function agregarConteo(item) {
     return api.post(path,item, header).then(res=>res);
 }
 
+function obtenerMPConMargen(cantidad){
+    const path = `${URL}/obtenerMPConMargen/${cantidad}`;
+    return api.get(path,header).then(res=> res.data[0][0]);
+}
+
+function obtenerLotesFueraLocal(){
+    const path = `${URL}/listarLotesFueraLocal/`;
+    return api.get(path,header).then(res=> res.data);
+}
+
 // "identificadorDiario":this.obtenerIdInput(id,fecha),
 // "idUsuarioRegistra":1,
 // "cantidad": cantidad
@@ -27,6 +43,9 @@ function agregarConteo(item) {
 export {
     listadoUltimosLotesRecibidos,
     listarConteosXFechas,
-    agregarConteo
+    agregarConteo,
+    listadoUltimosLotesCajasRecibidos,
+    obtenerMPConMargen,
+    obtenerLotesFueraLocal
     // createInventario
 }

@@ -34,119 +34,33 @@
                                                 </h6>
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6">
-                                                        <base-input alternative="" label="Folio / Carta"
-                                                            placeholder="Folio / Carta"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.folio_carta" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-6">
                                                         <base-input alternative="" label="Fecha de recepción"
                                                             placeholder="Fecha de recepción"
-                                                            input-classes="form-control-alternative"
-                                                            type="date"
+                                                            input-classes="form-control-alternative" type="date"
                                                             v-model="recepcion.fechaRecepcion" />
                                                     </div>
-                                                    <!-- <div class="col-sm-12 col-md-6">
-														<base-input alternative="" label="Apellido Paterno" placeholder="Apellido Paterno"
-															input-classes="form-control-alternative" v-model="cliente.apellidoP" v-upper-case />
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-sm-12 col-md-6">
-														<base-input alternative="" label="Apellido Materno" placeholder="Apellido Materno"
-															input-classes="form-control-alternative" v-model="cliente.apellidoS" v-upper-case />
-													</div> -->
-                                                    <!-- <div class="col-sm-12 col-md-6">
-                                                        <label style="margin-bottom: 0" for="datepicker"
-                                                            class="form-control-label mb-2">Fecha de
-                                                            Nacimiento</label>
-                                                        <b-form-datepicker size="sm" id="datepicker"
-                                                            placeholder="Fecha de Nacimiento"
-                                                            label-help="Selecciona la fecha con el puntero."
-                                                            class="mb-2" v-model="cliente.fechaNacimiento"
-                                                            :date-format-options="{
-                                                                year: 'numeric',
-                                                                month: 'numeric',
-                                                                day: 'numeric'
-                                                            }">
-                                                        </b-form-datepicker>
-                                                    </div> -->
-                                                </div>
-                                                <div class="row">
-                                                    <!-- <div class="col-sm-12 col-md-4">
-                                                        <base-input alternative=" " label="Codigo Postal"
-                                                            placeholder="Codigo Postal"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="cliente.codigoPostal" v-upper-case />
-                                                    </div> -->
                                                     <div class="col-sm-12 col-md-6">
-                                                        <label class="form-control-label"
-                                                            for="proveedor">Proveedor</label>
+                                                        <label class="form-control-label" for="proveedor">Salida
+                                                            pertenece</label>
                                                         <select name="proveedor" id="proveedor"
                                                             class="form-control form-control-alternative"
                                                             aria-describedby="addon-right addon-left"
-                                                            v-model="recepcion.idProveedor">
-                                                            <option value="SELECCIONA UNA OPCION" disabled selected>
+                                                            v-model="selectedSalidaACentro">
+                                                            <option value="0" disabled selected>
                                                                 SELECCIONA UNA OPCIÓN
                                                             </option>
-                                                            <option v-for="proveedor of proveedores" :key="proveedor.id"
-                                                                :value="proveedor.id">
-                                                                {{ proveedor.nombre }}
+                                                            <option v-for="salidaACentro of salidasACentro"
+                                                                :key="salidaACentro.id" :value="salidaACentro.id">
+                                                                {{ salidaACentro.value }}
                                                             </option>
                                                         </select>
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-sm-12 col-md-6">
-                                                        <base-input alternative="" label="Subtotal"
-                                                            placeholder="Subtotal"
-                                                            input-classes="form-control-alternative" v-model="subtotal"
-                                                            disabled />
-                                                    </div>
-                                                </div>
-                                                <!-- <div class="row">
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input alternative="" label="RFC" placeholder="RFC"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="cliente.rfc" v-upper-case />
-                                                    </div>
-                                                </div> -->
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative="" label="Costo de madera"
-                                                            placeholder="Costo de madera"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.costoMadera" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative="" label="Costo de flete"
-                                                            placeholder="Costo de flete"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.costoFlete" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative="" label="Costo descarga"
-                                                            placeholder="Costo descarga"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.costoDescarga" />
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative=""
-                                                            label="Cantidad cabezales" placeholder="Cantidad cabezales"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.cantCabezales" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative=""
-                                                            label="Cantidad tabletas" placeholder="Cantidad tabletas"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.cantidadTabletas" />
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4">
-                                                        <base-input type="number" alternative="" label="No. Cajas"
-                                                            placeholder="No. Cajas"
-                                                            input-classes="form-control-alternative"
-                                                            v-model="recepcion.numCajas" />
+                                                        <base-input alternative="" label="Cantidad"
+                                                            placeholder="Cantidad"
+                                                            input-classes="form-control-alternative" v-model="recepcion.numCajas" />
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -177,6 +91,7 @@ import storageSession from "../../../services/storage.js";
 import Proveedores from "../../../components/Utils/proveedores.js";
 // import { listarSucursales } from "../../../services/sucursales";
 import { getById, updateCliente } from "../../../services/clientes.js";
+import { obtenerLotesFueraLocal } from "../../../services/inventarios.js";
 import { create } from "../../../services/recepciones.js";
 import alerta from "../../../services/Alertas.js";
 export default {
@@ -195,6 +110,8 @@ export default {
                     _id: "SELECCIONA"
                 }
             },
+            salidasACentro: [],
+            selectedSalidaACentro: 0,
             sesion,
             proveedores: Proveedores,
             sucursales: "",
@@ -203,19 +120,23 @@ export default {
             recepcion: {
                 idRecepcion: null,
                 fechaRecepcion: null,
-                folio_carta: "",
-                idProveedor: "SELECCIONA UNA OPCION",
-                subtotal: 0.00,
-                costoMadera: 0.00,
-                costoFlete: 0.00,
-                costoDescarga: 0,
-                cantCabezales: 0,
-                cantidadTabletas: 0,
-                numCajas: 0,
-                codUsuario: 0,
-                costoXCaja: 0
+                numCajas: 0
             }
         };
+    },
+    watch: {
+        selectedSalidaACentro(newValue, oldValue) {
+            // Este código se ejecutará cada vez que selectedSalidaACentro cambie
+            console.log('Valor anterior:', oldValue);
+            console.log('Valor actual:', newValue);
+        }
+    },
+    mounted() {
+        obtenerLotesFueraLocal().then(res => {
+            res.forEach(element => {
+                this.salidasACentro.push({ id: element.IDLOTEENC, value: `${element.NOMBRELOTE} ${element.NombreRecibeOEntrega} (${element.NombreCentro})` })
+            });
+        });
     },
     computed: {
         subtotal() {
@@ -227,30 +148,14 @@ export default {
             return totalCost.toFixed(2);
         }
     },
-    created() {
-        this.cliente.estado = "SELECCIONA UNA OPCION";
-        if (this.id != "") {
-            getById(this.id).then(res => {
-                this.cliente = res.clientes;
-            });
-        }
-    },
     methods: {
         save() {
             let recepcionACrear = {
                 idRecepcion: this.recepcion.idRecepcion,
+                idReferencia: this.selectedSalidaACentro,
                 fechaRecepcion: this.recepcion.fechaRecepcion,
-                folio_carta: this.recepcion.folio_carta,
-                idProveedor: this.recepcion.idProveedor,
-                subtotal: this.recepcion.subtotal,
-                costoMadera: this.recepcion.costoMadera,
-                costoFlete: this.recepcion.costoFlete,
-                costoDescarga: this.recepcion.costoDescarga,
-                cantCabezales: this.recepcion.cantCabezales,
-                cantidadTabletas: this.recepcion.cantidadTabletas,
                 numCajas: this.recepcion.numCajas,
-                codUsuario: this.recepcion.codUsuario,
-                costoXCaja: this.recepcion.costoXCaja
+                codUsuario: this.recepcion.codUsuario
             };
             create(recepcionACrear).then(() => {
                 alerta.toast("Guardado", "success");

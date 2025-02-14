@@ -24,18 +24,6 @@
                         </div>
                         <div class="modal-body">
                             <table class="table ">
-                                <!-- <th> -->
-                                <!-- <pre>{{rowSelected}}</pre> -->
-                                <!-- <tr>
-                                    <td>Foto carta</td>
-                                    <button class="btn btn-outline-default" v-if="imgSelected == ''"
-                                        @click="verImagen(rowSelected.pathImgFlyer)">
-                                        <span>Ver Imagen
-                                            <i class="fas fa-image"></i>
-                                        </span>
-                                    </button>
-                                    <img :src="imgSelected" alt="" width="100" />
-                                </tr> -->
                                 <tr>
                                     <td>Código</td>
                                     <td><b>{{ rowSelected.idRecepcion }}</b></td>
@@ -57,40 +45,8 @@
                                     <td><b>{{ rowSelected.costoFlete }}</b></td>
                                 </tr>
                                 <tr>
-                                    <td>Facebook</td>
-                                    <td><b>{{ rowSelected.Facebook }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Proyecto</td>
-                                    <td><b>{{ rowSelected.NombreProyecto }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Descripción</td>
-                                    <td>
-                                        <textarea name="" id="" cols="20" rows="10"
-                                            v-model="rowSelected.DescripcionProducto" disabled="true">
-											</textarea>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td>Fecha de registro</td>
                                     <td><b>{{ rowSelected.fechaFormat }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Categoría</td>
-                                    <td><b>{{ rowSelected.NombreCategoria }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Subcategoría</td>
-                                    <td><b>{{ rowSelected.NombreSubCategoria }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Revisado</td>
-                                    <td><b>{{ rowSelected.Revisado ? 'Si' : 'No' }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Confirmado</td>
-                                    <td><b>{{ rowSelected.Confirmado ? 'Si' : 'No' }}</b></td>
                                 </tr>
                                 <!-- </th> -->
                             </table>

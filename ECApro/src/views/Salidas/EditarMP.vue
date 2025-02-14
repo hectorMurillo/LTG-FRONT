@@ -35,22 +35,38 @@
                                                 </h6>
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-4">
-                                                        <base-input alternative="" label="Centro"
-                                                            placeholder="Centro"
+                                                        <base-input alternative="" label="Centro de destino"
+                                                            placeholder="Centro de destino"
                                                             input-classes="form-control-alternative"
-                                                            v-model="recepcion.folio_carta" />
+                                                            v-model="salida.centro" />
                                                     </div>
                                                     <div class="col-sm-12 col-md-4">
                                                         <base-input alternative="" label="Cant. de cajas"
                                                             placeholder="Cant. de cajas"
                                                             input-classes="form-control-alternative"
-                                                            v-model="recepcion.folio_carta" />
+                                                            v-model="salida.cant_cajas" @blur="obtenerLote"
+                                                            @input="validarCantidad" />
+                                                        <p v-if="error" class="text-danger">{{ error }}</p>
                                                     </div>
+                                                    <!-- <div class="col-sm-12 col-md-3">
+                                                        <label class="form-control-label" for="lotesDisp">Lote</label>
+                                                        <select name="lotesDisp" id="lotesDisp"
+                                                            class="form-control form-control-alternative"
+                                                            aria-describedby="addon-right addon-left"
+                                                            v-model="loteSelected">
+                                                            <option value="SELECCIONA UNA OPCION" disabled selected>
+                                                                SELECCIONA UNA OPCIÓN
+                                                            </option>
+                                                            <option v-for="loteDisp of salida.lote" :key="loteDisp.id">
+                                                                {{ loteDisp.nombre }}
+                                                            </option>
+                                                        </select>
+                                                    </div> -->
                                                     <div class="col-sm-12 col-md-4">
-                                                        <base-input alternative="" label="Recibe"
-                                                            placeholder="Recibe"
+                                                        <base-input alternative="" label="Nombre de quien recibe"
+                                                            placeholder="Nombre de quien Recibe"
                                                             input-classes="form-control-alternative"
-                                                            v-model="recepcion.folio_carta" />
+                                                            v-model="salida.recibe" />
                                                     </div>
 
                                                     <!-- <div class="col-sm-12 col-md-6">
@@ -85,7 +101,7 @@
                                                             Limpiar
                                                         </base-button>
                                                         <base-button type="success" icon="ni ni-fat-add"
-                                                            v-on:click="save">Guardar</base-button>
+                                                            v-on:click="save" :disabled="error">Guardar</base-button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -107,7 +123,9 @@ import storageSession from "../../services/storage.js";
 import Proveedores from "../../components/Utils/proveedores.js";
 // import { listarSucursales } from "../../services/sucursales";
 import { getById, updateCliente } from "../../services/clientes.js";
-import { create } from "../../services/recepciones.js";
+// import { create } from "../../services/recepciones.js";
+import { agregarSalidaACentro } from "../../services/salidas.js";
+import { obtenerMPConMargen } from '../../services/inventarios.js';
 import alerta from "../../services/Alertas.js";
 export default {
     name: "Recepcion-madera",
@@ -130,9 +148,15 @@ export default {
             sucursales: "",
             pagina: 1,
             totalPaginas: 1,
-            salida:{
+            salida: {
                 idSalida: null,
+                centro: "",
+                cant_cajas: 0,
+                lote: [{ id: 0, nombre: "Seleccione" }],
+                recibe: ""
             },
+            loteSelected: 0,
+            loteSelected2: null,
             recepcion: {
                 idRecepcion: null,
                 fechaRecepcion: null,
@@ -147,7 +171,8 @@ export default {
                 numCajas: 0,
                 codUsuario: 0,
                 costoXCaja: 0
-            }
+            },
+            error: null,
         };
     },
     computed: {
@@ -170,26 +195,26 @@ export default {
     },
     methods: {
         save() {
-            let recepcionACrear = {
-                idRecepcion: this.recepcion.idRecepcion,
-                fechaRecepcion: this.recepcion.fechaRecepcion,
-                folio_carta: this.recepcion.folio_carta,
-                idProveedor: this.recepcion.idProveedor,
-                subtotal: this.recepcion.subtotal,
-                costoMadera: this.recepcion.costoMadera,
-                costoFlete: this.recepcion.costoFlete,
-                costoDescarga: this.recepcion.costoDescarga,
-                cantCabezales: this.recepcion.cantCabezales,
-                cantidadTabletas: this.recepcion.cantidadTabletas,
-                numCajas: this.recepcion.numCajas,
-                codUsuario: this.recepcion.codUsuario,
-                costoXCaja: this.recepcion.costoXCaja,
-                tipoLote: 4
+            // salida: {
+            //     idSalida: null,
+            //     centro: "",
+            //     cant_cajas: 0,
+            //     lote: [{ id: 0, nombre: "Seleccione" }],
+            //     recibe: ""
+            // },
+            let salidaACentroGuardar = {
+                idLote: null,
+                idLoteRef: this.idLoteRef,
+                idLoteRef2: this.idLoteRef2,
+                nombreCentro: this.salida.centro,
+                nombreRecibe: this.salida.recibe,
+                cantCajas: this.salida.cant_cajas,
+                codUsuario: 1
             };
-            create(recepcionACrear).then(() => {
+            agregarSalidaACentro(salidaACentroGuardar).then(() => {
                 alerta.toast("Guardado", "success");
                 this.$router.push({
-                    name: "recepcion"
+                    name: "salida"
                 });
             }).catch((error) => {
                 alerta.toast("Ha ocurrido un error en el guardado", "error")
@@ -223,7 +248,31 @@ export default {
         },
         cancelar() {
             this.$router.go(-1);
-        }
+        },
+        obtenerLote() {
+            if (this.salida.cant_cajas > 0) {
+                obtenerMPConMargen(this.salida.cant_cajas).then((res) => {
+                    console.log("res ", res);
+                    this.error = res == undefined ? "No hay existencia para esa cantidad " : null;
+                    // this.salida.lote.pop();
+                    // this.salida.lote.push({ id: res?.IDLOTEENC, nombre: res?.NOMBRELOTE });
+                    this.idLoteRef = res.id_lote1;
+                    this.idLoteRef2 = res.id_lote2;
+                });
+            }
+        },
+        validarCantidad(newValue) { // Recibe newValue como argumento
+            if (newValue < 1 || newValue > 5000) {
+                this.error = 'La cantidad de cajas debe estar entre 1 y 5000.';
+            } else {
+                this.error = null;
+            }
+        },
+    },
+    watch: {
+        'salida.cant_cajas': function (newValue) {
+            this.validarCantidad(newValue); // Pasa newValue a la función
+        },
     }
 };
 </script>

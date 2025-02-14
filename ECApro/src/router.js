@@ -70,8 +70,8 @@ const routes = [
         props: true
       },
       {
-        path: "/salida-mp",
-        name: "salida-mp",
+        path: "/salida-mp-a-centro",
+        name: "salida-mp-a-centro",
         component: () =>
           import(/* webpackChunkName: "demo" */ "./views/Salidas/EditarMP.vue"),
         props: true

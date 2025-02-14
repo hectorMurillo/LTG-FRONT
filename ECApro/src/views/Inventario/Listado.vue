@@ -36,6 +36,11 @@
                                 <cajas-x-elaborar></cajas-x-elaborar>
                             </div>
                         </div>
+                        <div class="row mt-5">
+                            <div class="col-12 mb-5">
+                                <cajas-elaboradas></cajas-elaboradas>
+                            </div>
+                        </div>
                         <!-- <div class="row mt-5">
                             <div class="col-xl-4">
                                 <social-traffic-table></social-traffic-table>
@@ -265,6 +270,9 @@ import { listadoEtiquetas, agregar } from "../../services/etiquetas";
 // import SocialTrafficTable from '../Dashboard/SocialTrafficTable.vue';
 import CajasXElaborar from '../Dashboard/CajasXElaborar.vue';
 
+import CajasElaboradas from '../Dashboard/CajasElaboradas.vue';
+
+
 import {
     listadoUltimosLotesRecibidos
 } from "../../services/inventarios";
@@ -280,6 +288,7 @@ import {
 export default {
     components: {
         CajasXElaborar,
+        CajasElaboradas
         // SocialTrafficTable
     },
     name: "Inventario",

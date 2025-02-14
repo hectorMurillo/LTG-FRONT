@@ -3,12 +3,10 @@
         <div class="card-header border-0">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="mb-0">Lotes de materia prima recibidos</h3>
+                    <h3 class="mb-0">Lotes de cajas recibidas</h3>
                 </div>
                 <div class="col text-right">
-                    <h3>Por elaborar</h3> <p>{{ sumaTotalPorElaborar }}</p>
-                    <h3>Elaborados</h3> <p>{{ sumaTotalElaborados }}</p>
-                    <h3>Disponibilidad</h3> <p>{{ sumaTotalPorElaborar - sumaTotalPrestadas }}</p>
+                    <h3>Disponibilidad</h3> <p>{{ sumaTotalElaborados }}</p>
                     <!-- <a href="#!" class="btn btn-sm btn-primary">Ver más</a> -->
                 </div>
             </div>
@@ -23,7 +21,6 @@
                     <th>Elaborados</th>
                     <th>% Elaborados</th>
                     <th>Por Elaborar</th>
-                    <th>Prestadas</th>
                 </template>
 
                 <template slot-scope="{row}">
@@ -45,9 +42,6 @@
                     <td :class="row.PORELABORAR == 0 ? 'tachado' : '.sinStyle'">
                         {{ row.PORELABORAR }}
                     </td>
-                    <td :class="row.PRESTADA == 0 ? 'tachado' : '.sinStyle'">
-                        {{ row.PRESTADAS }}
-                    </td>
                 </template>
 
             </base-table>
@@ -58,19 +52,17 @@
 <script>
 
 import {
-    listadoUltimosLotesRecibidos
+    listadoUltimosLotesCajasRecibidos
 } from "../../services/inventarios";
 
 export default {
-    name: 'cajas-x-elaborar',
+    name: 'cajas-elaboradas',
     data() {
         return {
             ultimosLotes: [
             
             ],
-            sumaTotalPorElaborar : 0,
-            sumaTotalElaborados: 0,
-            sumaTotalPrestadas : 0
+            sumaTotalElaborados : 0
         }
     },
     mounted() {
@@ -78,13 +70,12 @@ export default {
     },
     methods: {
         getUltimosLotesRecibidos(){
-            listadoUltimosLotesRecibidos().then((res) => {
+            listadoUltimosLotesCajasRecibidos().then((res) => {
                 this.ultimosLotes = res;
                 this.ultimosLotes.forEach(element => {
-                    this.sumaTotalPorElaborar +=  element.PORELABORAR;
+                    console.log("SE SALE AQUI ",element)
                     this.sumaTotalElaborados += element.ELABORADOS;
-                    this.sumaTotalPrestadas += element.PRESTADAS;
-                }); 
+                });
             });
         }
     },
